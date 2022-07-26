@@ -38,7 +38,7 @@ public class Movable : MonoBehaviour
         Tilemap tilemap = FindObjectOfType<Tilemap>();
         if (tilemap != null)
         {
-            path = Pathfinder.findPath(tilemap, DataStructureManager.getInstance().getNode(tilemap.WorldToCell(new Vector3(transform.position.x, transform.position.y, 0))), selectedTile);
+            path = Pathfinder.findPathVector3(tilemap, DataStructureManager.getInstance().getNode(tilemap.WorldToCell(new Vector3(transform.position.x, transform.position.y, 0))), selectedTile);
         }
     }
 

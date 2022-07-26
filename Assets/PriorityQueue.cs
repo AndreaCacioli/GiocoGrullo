@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
 
 public class PriorityQueue<T1>
 {
@@ -50,6 +50,10 @@ public class PriorityQueue<T1>
         return s;
     }
 
+    internal int Size()
+    {
+        return queue.Count;
+    }
 }
 
 public class Node<T> : System.IComparable
@@ -73,14 +77,17 @@ public class Node<T> : System.IComparable
         this.g = g;
     }
 
-    public int CompareTo(object obj)
+    int IComparable.CompareTo(object obj)
     {
         if (obj.GetType() == typeof(Node<T>))
         {
-            Debug.Log(".");
-            return (int)((priority - ((Node<T>)obj).getPriority()) * 1000);
+            Node<T> node = (Node<T>)obj;
+            float diff = priority - node.getPriority();
+            if (diff <= float.Epsilon) return 0;
+            int res = (int)(diff * 1000);
+            return res;
         }
-        else return -1;
+        else throw new Exception("Object comparision impossible!");
     }
 
     internal float getG()

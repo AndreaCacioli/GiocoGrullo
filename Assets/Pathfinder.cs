@@ -4,44 +4,113 @@ using UnityEngine.Tilemaps;
 
 public class Pathfinder
 {
-    public static List<Vector3> findPath(Tilemap tilemap, GraphNode start, GraphNode destination)
+    public static List<GraphNode> findPath(GraphNode start, GraphNode destination)
     {
-        List<Vector3> steps = new List<Vector3>();
+        HashSet<GraphNode> closedSet = new HashSet<GraphNode>();
+        HashSet<GraphNode> openSet = new HashSet<GraphNode>();
 
-        PriorityQueue<GraphNode> queue = new PriorityQueue<GraphNode>();
+        Dictionary<GraphNode, float> gScore = new Dictionary<GraphNode, float>();
+        Dictionary<GraphNode, float> hScore = new Dictionary<GraphNode, float>();
+        Dictionary<GraphNode, float> fScore = new Dictionary<GraphNode, float>();
 
-        queue.enqueue(start, h(start, destination), null, 0);
-        Node<GraphNode> node_extracted = null;
-        Debug.Log("Starting the pathfinder");
+        Dictionary<GraphNode, GraphNode> came_from = new Dictionary<GraphNode, GraphNode>();
 
-        while (!queue.isEmpty())
+        gScore[start] = 0;
+        hScore[start] = h(start, destination);
+        fScore[start] = hScore[start];
+        came_from[start] = null;
+
+        openSet.Add(start);
+
+        while (openSet.Count != 0)
         {
-            Debug.Log("The queue is " + queue);
-            node_extracted = queue.dequeue();
-            GraphNode node_current = node_extracted.getItem();
-            Debug.Log("Woriking on " + node_current);
-
-            if (node_current == destination) break;
-
-            foreach (GraphNode node_successor in node_current.getNeighbours())
+            GraphNode x = smallestf(openSet, fScore);
+            if (x == destination)
             {
-                float newg = node_extracted.getG() + node_current.getTravellingCost();
+                //came_from[destination] = x;
+                return reconstructPath(came_from, destination);
+            }
+            openSet.Remove(x);
+            closedSet.Add(x);
 
-                queue.enqueue(node_successor, newg + h(node_successor, destination), node_extracted, newg);
+            float tentative_g_score;
+            bool tentative_is_better;
+            foreach (GraphNode neighbour in x.getNeighbours())
+            {
+                if (closedSet.Contains(neighbour)) continue;
+                tentative_g_score = gScore[x] + x.getTravellingCost();
+
+                if (!openSet.Contains(neighbour))
+                {
+                    openSet.Add(neighbour);
+                    tentative_is_better = true;
+                }
+                else if (tentative_g_score < gScore[neighbour])
+                {
+                    tentative_is_better = true;
+                }
+                else
+                {
+                    tentative_is_better = false;
+                }
+
+                if (tentative_is_better)
+                {
+                    came_from[neighbour] = x;
+                    gScore[neighbour] = tentative_g_score;
+                    hScore[neighbour] = h(neighbour, destination);
+                    fScore[neighbour] = gScore[neighbour] + hScore[neighbour];
+                }
+            }
+
+        }
+        return null;
+    }
+
+    internal static List<Vector3> findPathVector3(Tilemap tilemap, GraphNode graphNode, GraphNode selectedTile)
+    {
+        List<Vector3> ret = new List<Vector3>();
+        var steps = findPath(graphNode, selectedTile);
+        if (steps == null) return null;
+        foreach (GraphNode g in steps)
+        {
+            var v = DataStructureManager.getInstance().getCoordinates(g);
+            ret.Add(tilemap.CellToWorld(new Vector3Int(v.x, v.y, 0)));
+        }
+        return ret;
+    }
+
+    private static List<GraphNode> reconstructPath(Dictionary<GraphNode, GraphNode> came_from, GraphNode destination)
+    {
+        List<GraphNode> steps = new List<GraphNode>();
+        if (came_from[destination] != null)
+        {
+            GraphNode x = destination;
+            while (x != null)
+            {
+                steps.Add(x);
+                x = came_from[x];
+            }
+            steps.Reverse();
+            return steps;
+        }
+        else return null;
+    }
+
+    private static GraphNode smallestf(HashSet<GraphNode> openSet, Dictionary<GraphNode, float> fScore)
+    {
+        float min = float.MaxValue;
+        GraphNode ret = null;
+        foreach (GraphNode node in openSet)
+        {
+            if (fScore[node] < min)
+            {
+                ret = node;
+                min = fScore[node];
             }
         }
 
-        Debug.Log("Found path!!!");
-
-        while (node_extracted != null)
-        {
-            steps.Add(tilemap.CellToWorld(DataStructureManager.getInstance().getCoordinates(node_extracted.getItem())));
-            node_extracted = node_extracted.getVisitedBy();
-
-        }
-
-        steps.Reverse();
-        return steps;
+        return ret;
     }
 
     private static float h(GraphNode a, GraphNode b)
