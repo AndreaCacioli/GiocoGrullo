@@ -4,6 +4,9 @@ using UnityEngine.Tilemaps;
 
 public class Movable : MonoBehaviour
 {
+    FogOfWar FogOfWar;
+    [SerializeField] int vision = 2;
+
     private Vector3 destination;
     [SerializeField] private float speed = 2;
     private List<Vector3> path;
@@ -12,6 +15,8 @@ public class Movable : MonoBehaviour
     void Start()
     {
         destination = transform.position;
+        FogOfWar = FindObjectOfType<FogOfWar>();
+        FogOfWar.clearPosition(transform.position, vision);
     }
 
     // Update is called once per frame
@@ -24,10 +29,14 @@ public class Movable : MonoBehaviour
         }
         else
         {
-            if (path != null && path.Count > 0)
+            if (path != null)
             {
-                destination = path[0];
-                path.RemoveAt(0);
+                if(path.Count > 0)
+                {
+                    destination = path[0];
+                    path.RemoveAt(0);
+                }
+                FogOfWar.clearPosition(transform.position, vision);
             }
         }
 
@@ -35,10 +44,12 @@ public class Movable : MonoBehaviour
 
     internal void moveTo(GraphNode selectedTile)
     {
-        Tilemap tilemap = FindObjectOfType<Tilemap>();
-        if (tilemap != null)
+        Tilemap mapTilemap;
+        Map handleDataStructure = FindObjectOfType<Map>();
+        mapTilemap = handleDataStructure.GetComponentInChildren<Tilemap>();
+        if (mapTilemap != null)
         {
-            path = Pathfinder.findPathVector3(tilemap, DataStructureManager.getInstance().getNode(tilemap.WorldToCell(new Vector3(transform.position.x, transform.position.y, 0))), selectedTile);
+            path = Pathfinder.findPathVector3(mapTilemap, DataStructureManager.getInstance().getNode(mapTilemap.WorldToCell(new Vector3(transform.position.x, transform.position.y, 0))), selectedTile);
         }
     }
 

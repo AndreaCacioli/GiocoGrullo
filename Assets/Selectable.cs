@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -20,17 +18,16 @@ public class Selectable : MonoBehaviour
 
         if (tilemap == null)
         {
-            SelectionManager.getInstance().Select(this);
             Debug.Log("Selected a non-tilemap ~" + gameObject.name);
+            SelectionManager.getInstance().Select(this);
         }
         else
         {
+            Debug.Log("Selected a tilemap ~" + gameObject.name);
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int selectedCellCoord = tilemap.WorldToCell(mousePosition);
             selectedCellCoord.z = 0;
             SelectionManager.getInstance().Select(DataStructureManager.getInstance().getNode(selectedCellCoord));
-
-            Debug.Log("Selected a tilemap!");
         }
     }
 

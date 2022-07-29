@@ -6,6 +6,8 @@ public class Pathfinder
 {
     public static List<GraphNode> findPath(GraphNode start, GraphNode destination)
     {
+        if (destination.getTravellingCost() == float.PositiveInfinity) return null;
+
         HashSet<GraphNode> closedSet = new HashSet<GraphNode>();
         HashSet<GraphNode> openSet = new HashSet<GraphNode>();
 
@@ -75,7 +77,7 @@ public class Pathfinder
         foreach (GraphNode g in steps)
         {
             var v = DataStructureManager.getInstance().getCoordinates(g);
-            ret.Add(tilemap.CellToWorld(new Vector3Int(v.x, v.y, 0)));
+            ret.Add(tilemap.CellToWorld(new Vector3Int(v.x, v.y, -1)));
         }
         return ret;
     }
