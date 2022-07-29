@@ -2,6 +2,11 @@
 
 public class GameRules
 {
+    public static float WarriorStartingHealth()
+    {
+        return 100f; 
+    }
+
     public static float Cost(TileBase t)
     {
         try

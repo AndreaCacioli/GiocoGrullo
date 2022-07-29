@@ -14,12 +14,7 @@ public class FogOfWar : MonoBehaviour
     {
         fowTilemap = GetComponentInChildren<Tilemap>();
         var col = FindObjectsOfType<Tilemap>();
-        if (col.Length != 2) throw new System.Exception("There is a wrong number of tilemaps in the scene, make sure there are only one Map and one Fog Of War!");
-        foreach (Tilemap t in col)
-        {
-            if (t != fowTilemap) mapTilemap = t;
-        }
-
+        mapTilemap = FindObjectOfType<Map>().GetComponentInChildren<Tilemap>();
         InitializeFOW();
     }
 

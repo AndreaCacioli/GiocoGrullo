@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -10,6 +11,7 @@ public class Movable : MonoBehaviour
     private Vector3 destination;
     [SerializeField] private float speed = 2;
     private List<Vector3> path;
+    public bool isRunning  { get; private set; } 
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,7 @@ public class Movable : MonoBehaviour
         if (Vector3.Distance(destination, transform.position) > .1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
-
+            isRunning = true;
         }
         else
         {
@@ -36,8 +38,13 @@ public class Movable : MonoBehaviour
                     destination = path[0];
                     path.RemoveAt(0);
                 }
+                else 
+		        {
+                    isRunning = false;
+		        }
                 FogOfWar.clearPosition(transform.position, vision);
             }
+           
         }
 
     }
