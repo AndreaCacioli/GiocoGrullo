@@ -4,10 +4,12 @@ using UnityEngine.Tilemaps;
 public class Selectable : MonoBehaviour
 {
     Tilemap tilemap;
+    FogOfWar fogOfWar;
 
     private void Awake()
     {
         tilemap = GetComponent<Tilemap>();
+        fogOfWar = FindObjectOfType<FogOfWar>();
     }
 
 
@@ -23,11 +25,19 @@ public class Selectable : MonoBehaviour
         }
         else
         {
+
             Debug.Log("Selected a tilemap ~" + gameObject.name);
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int selectedCellCoord = tilemap.WorldToCell(mousePosition);
             selectedCellCoord.z = 0;
-            SelectionManager.getInstance().Select(DataStructureManager.getInstance().getNode(selectedCellCoord));
+            if (fogOfWar.isVisible(mousePosition))
+            {
+                SelectionManager.getInstance().Select(DataStructureManager.getInstance().getNode(selectedCellCoord));
+            }
+            else
+            {
+                //TODO make it possible to preselect the tile even if it is not visible
+            }
         }
     }
 

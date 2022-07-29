@@ -35,6 +35,13 @@ public class FogOfWar : MonoBehaviour
         }
     }
 
+    internal bool isVisible(Vector3 WorldCoord)
+    {
+        WorldCoord.z = -1;
+        TileBase tile = fowTilemap.GetTile(fowTilemap.WorldToCell(WorldCoord));
+        return tile == null;
+    }
+
     private void Start()
     {
 

@@ -26,7 +26,7 @@ public class Pathfinder
 
         while (openSet.Count != 0)
         {
-            GraphNode x = smallestf(openSet, fScore);
+            GraphNode x = smallest(openSet, fScore);
             if (x == destination)
             {
                 //came_from[destination] = x;
@@ -65,6 +65,11 @@ public class Pathfinder
                 }
             }
 
+            if (smallest(openSet, fScore) == null) //Every node in the open set has infinite f value;
+            {
+                return reconstructPath(came_from, came_from[smallest(closedSet, hScore)]);
+            }
+
         }
         return null;
     }
@@ -99,16 +104,16 @@ public class Pathfinder
         else return null;
     }
 
-    private static GraphNode smallestf(HashSet<GraphNode> openSet, Dictionary<GraphNode, float> fScore)
+    private static GraphNode smallest(HashSet<GraphNode> set, Dictionary<GraphNode, float> score)
     {
         float min = float.MaxValue;
         GraphNode ret = null;
-        foreach (GraphNode node in openSet)
+        foreach (GraphNode node in set)
         {
-            if (fScore[node] < min)
+            if (score[node] < min)
             {
                 ret = node;
-                min = fScore[node];
+                min = score[node];
             }
         }
 
