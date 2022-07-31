@@ -12,7 +12,7 @@ public class Movable : MonoBehaviour
     private Vector3 destination;
     [SerializeField] private float speed = 2;
     private List<Vector3> path;
-    public bool isRunning { get; private set; }
+    public bool IsRunning { get; private set; }
 
     void Start()
     {
@@ -27,7 +27,7 @@ public class Movable : MonoBehaviour
         if (Vector3.Distance(destination, transform.position) > .1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
-            isRunning = true;
+            IsRunning = true;
         }
         else
         {
@@ -36,11 +36,14 @@ public class Movable : MonoBehaviour
                 if (path.Count > 0)
                 {
                     destination = path[0];
+                    var x = Mathf.Abs(transform.localScale.x);
+                    if (destination.x < transform.position.x) transform.localScale = new Vector3(-x, transform.localScale.y, transform.localScale.z);
+                    else transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
                     path.RemoveAt(0);
                 }
                 else
                 {
-                    isRunning = false;
+                    IsRunning = false;
                     path = null;
                 }
                 fogOfWar.clearPosition(transform.position, vision);

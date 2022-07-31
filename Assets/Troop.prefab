@@ -576,7 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vision: 6
-  _movementPoints: 4
+  movementPoints: 50
   speed: 10
 --- !u!114 &-4632248603060301772
 MonoBehaviour:

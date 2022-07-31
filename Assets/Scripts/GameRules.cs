@@ -4,7 +4,7 @@ public class GameRules
 {
     public static float WarriorStartingHealth()
     {
-        return 100f; 
+        return 100f;
     }
 
     public static float Cost(TileBase t)

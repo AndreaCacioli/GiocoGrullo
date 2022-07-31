@@ -87,7 +87,7 @@ public class Pathfinder
         steps.RemoveAt(0);
         foreach (GraphNode g in steps)
         {
-            if (movementPoints <= 0) break;
+            if (movementPoints - g.getTravellingCost() < 0) break;
             movementPoints -= g.getTravellingCost();
             var v = DataStructureManager.getInstance().getCoordinates(g);
             ret.Add(tilemap.CellToWorld(new Vector3Int(v.x, v.y, -1)));
