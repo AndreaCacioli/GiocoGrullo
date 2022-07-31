@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -11,17 +9,17 @@ public class DataStructureManager
     private static Dictionary<Vector3Int, GraphNode> dictionary;
 
     private DataStructureManager()
-    { 
+    {
     }
 
     public static DataStructureManager getInstance()
     {
-	    if(instance == null)
+        if (instance == null)
         {
             instance = new DataStructureManager();
             dictionary = new Dictionary<Vector3Int, GraphNode>();
 
-	    }
+        }
         return instance;
     }
 
@@ -33,8 +31,8 @@ public class DataStructureManager
     }
 
     public void initializeWithTilemap(Tilemap tilemap)
-    { 
-	    if(tilemap != null)
+    {
+        if (tilemap != null)
         {
             for (int x = tilemap.cellBounds.min.x; x < tilemap.cellBounds.max.x; x++)
             {
@@ -42,39 +40,41 @@ public class DataStructureManager
                 {
                     for (int z = tilemap.cellBounds.min.z; z < tilemap.cellBounds.max.z; z++)
                     {
-                        if(tilemap.GetTile(new Vector3Int(x,y,z)) != null)
-                        {   
-			                Vector3Int key =  new Vector3Int(x, y, z);
-						    TileBase t = tilemap.GetTile(key);
+                        if (tilemap.GetTile(new Vector3Int(x, y, z)) != null)
+                        {
+                            Vector3Int key = new Vector3Int(x, y, z);
+                            TileBase t = tilemap.GetTile(key);
                             GraphNode graphNode = new GraphNode(t);
-                            for(int i = y - 1; i <= y + 1; i++)
+                            for (int i = y - 1; i <= y + 1; i++)
                             {
                                 int x_start;
                                 int x_end;
-                                if(i == y) {
+                                if (i == y)
+                                {
                                     x_start = x - 1;
                                     x_end = x + 1;
                                 }
-                                else {
-				                    if(y % 2 == 0) { x_start = x - 1; x_end = x; }
-                                    else { x_start = x; x_end = x + 1; } 
-			                    }
-			                    for(int j = x_start; j <= x_end; j++)
+                                else
+                                {
+                                    if (y % 2 == 0) { x_start = x - 1; x_end = x; }
+                                    else { x_start = x; x_end = x + 1; }
+                                }
+                                for (int j = x_start; j <= x_end; j++)
                                 {
                                     GraphNode possibleNeighbour;
                                     Vector3Int coord = new Vector3Int(j, i, z);
-							        bool outcome = dictionary.TryGetValue(coord , out possibleNeighbour);
-                                    if(outcome && tilemap.GetTile(coord) != null)
+                                    bool outcome = dictionary.TryGetValue(coord, out possibleNeighbour);
+                                    if (outcome && tilemap.GetTile(coord) != null)
                                     {
                                         graphNode.addNeighbour(possibleNeighbour);
                                         possibleNeighbour.addNeighbour(graphNode);
-				                    }
-			                    } 
-			                }
+                                    }
+                                }
+                            }
 
                             dictionary.Add(key, graphNode);
-			            }
-                       
+                        }
+
                     }
                 }
 
@@ -85,30 +85,42 @@ public class DataStructureManager
 
     internal Vector3Int getCoordinates(TileBase selectedTile)
     {
-         foreach(KeyValuePair<Vector3Int, GraphNode> pair in dictionary)
-         {
-	        if (selectedTile != null && pair.Value.getTileBase().Equals(selectedTile))
-	        {
+        foreach (KeyValuePair<Vector3Int, GraphNode> pair in dictionary)
+        {
+            if (selectedTile != null && pair.Value.getTileBase().Equals(selectedTile))
+            {
                 return pair.Key;
-	        }
+            }
 
-	     }
-         return new Vector3Int();
+        }
+        return new Vector3Int();
     }
 
-    public Vector3Int getCoordinates(GraphNode graphNode) {
+    internal List<GraphNode> getAllNodes()
+    {
+        List<GraphNode> ret = new List<GraphNode>();
+        Dictionary<Vector3Int, GraphNode>.ValueCollection values = dictionary.Values;
+        foreach (GraphNode node in values)
+        {
+            ret.Add(node);
+        }
+        return ret;
+    }
 
-		 foreach(KeyValuePair<Vector3Int, GraphNode> pair in dictionary)
-         {
-	        if (graphNode != null && pair.Value.Equals(graphNode))
-	        {
+    public Vector3Int getCoordinates(GraphNode graphNode)
+    {
+
+        foreach (KeyValuePair<Vector3Int, GraphNode> pair in dictionary)
+        {
+            if (graphNode != null && pair.Value.Equals(graphNode))
+            {
                 return pair.Key;
-	        }
+            }
 
-	     }
+        }
 
         return new Vector3Int();
-    
+
     }
 
     internal List<Vector3Int> getNeighboursCoordinates(Vector3Int coordinates)
@@ -118,9 +130,9 @@ public class DataStructureManager
 
         GraphNode node;
         dictionary.TryGetValue(coordinates, out node);
-        foreach(GraphNode graphNode in node.getNeighbours())
+        foreach (GraphNode graphNode in node.getNeighbours())
         {
-            foreach(KeyValuePair<Vector3Int, GraphNode> pair in dictionary)
+            foreach (KeyValuePair<Vector3Int, GraphNode> pair in dictionary)
             {
                 if (pair.Value.Equals(graphNode))
                 {
@@ -128,7 +140,7 @@ public class DataStructureManager
                     break;
                 }
 
-	        }
+            }
         }
         return ret;
 

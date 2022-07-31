@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 public class Pathfinder
 {
-    public static List<GraphNode> findPath(GraphNode start, GraphNode destination)
+    public static List<GraphNode> findPath(GraphNode start, GraphNode destination, Dictionary<GraphNode, bool> visibility)
     {
         if (destination.getTravellingCost() == float.PositiveInfinity) return null;
 
@@ -39,7 +39,7 @@ public class Pathfinder
             bool tentative_is_better;
             foreach (GraphNode neighbour in x.getNeighbours())
             {
-                if (closedSet.Contains(neighbour)) continue;
+                if (closedSet.Contains(neighbour) || !visibility[neighbour]) continue;
                 tentative_g_score = gScore[x] + x.getTravellingCost();
 
                 if (!openSet.Contains(neighbour))
@@ -74,13 +74,21 @@ public class Pathfinder
         return null;
     }
 
-    internal static List<Vector3> findPathVector3(Tilemap tilemap, GraphNode graphNode, GraphNode selectedTile)
+    internal static List<Vector3> findPathVector3(Tilemap tilemap, FogOfWar fogOfWar, GraphNode graphNode, GraphNode selectedTile, ref float movementPoints)
     {
         List<Vector3> ret = new List<Vector3>();
-        var steps = findPath(graphNode, selectedTile);
+        Dictionary<GraphNode, bool> visibility = new Dictionary<GraphNode, bool>();
+        foreach (GraphNode node in DataStructureManager.getInstance().getAllNodes())
+        {
+            visibility.Add(node, fogOfWar.isVisible(tilemap.CellToWorld(DataStructureManager.getInstance().getCoordinates(node))));
+        }
+        var steps = findPath(graphNode, selectedTile, visibility);
         if (steps == null) return null;
+        steps.RemoveAt(0);
         foreach (GraphNode g in steps)
         {
+            if (movementPoints <= 0) break;
+            movementPoints -= g.getTravellingCost();
             var v = DataStructureManager.getInstance().getCoordinates(g);
             ret.Add(tilemap.CellToWorld(new Vector3Int(v.x, v.y, -1)));
         }
