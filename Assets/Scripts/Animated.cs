@@ -8,6 +8,9 @@ internal class Animated : MonoBehaviour
     Selectable selectable;
     private IWithHealth healthContainer;
 
+    //Used to only show the selection animation once
+    private bool done = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,5 +34,17 @@ internal class Animated : MonoBehaviour
         if (movable != null) animator.SetBool("Action", movable.IsRunning);
         if (healthContainer != null && healthContainer.getCurrentHealth() <= 0) animator.SetTrigger("Die");
         //TODO implement attack when we setup the combat system
+
+
+        if (!done && selectable != null && selectable == SelectionManager.getInstance().Selectable)
+        {
+            animator.SetTrigger("Hit");
+            done = true;
+        }
+        if (done)
+        {
+            if (selectable != null && selectable != SelectionManager.getInstance().Selectable) done = false;
+        }
+
     }
 }

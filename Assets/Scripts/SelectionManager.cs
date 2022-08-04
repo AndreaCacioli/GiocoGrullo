@@ -1,55 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
-
 public class SelectionManager
 {
     private static SelectionManager instance = null;
 
     private GraphNode selectedTile;
-    private Movable selectedMovable;
+    public Selectable Selectable { get; private set; }
+
 
     public Movable SelectedMovable
     {
-        get => selectedMovable; 
+        get => Selectable != null ? Selectable.GetComponent<Movable>() : null;
     }
 
     public GraphNode SelectedTile
-	{
+    {
         get => selectedTile;
-	}
+    }
 
     public void Select(GraphNode node)
     {
-        selectedTile = node; 
-        if(selectedMovable != null)
+        selectedTile = node;
+        if (SelectedMovable != null)
         {
-            selectedMovable.moveTo(selectedTile);
-            selectedMovable = null;
-            selectedTile = null; 
-	    }
+            SelectedMovable.moveTo(selectedTile);
+            Selectable = null;
+            selectedTile = null;
+        }
     }
 
     public void Select(Selectable selectable)
     {
-        Movable attachedMovableComponent = selectable.GetComponent<Movable>();
-        if (attachedMovableComponent != null)
-        {
-            selectedMovable = attachedMovableComponent;
-	    } 
+        this.Selectable = selectable;
     }
 
     private SelectionManager()
-    { 
+    {
     }
 
     public static SelectionManager getInstance()
     {
-	    if(instance == null)
+        if (instance == null)
         {
-            instance = new SelectionManager(); 
-	    }
+            instance = new SelectionManager();
+        }
         return instance;
     }
 }
