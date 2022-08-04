@@ -5,18 +5,18 @@ public class UpdateOnHealthChange : MonoBehaviour
 {
     IWithHealth healthContainer;
     Slider slider;
-    [SerializeField] float percentageYellow = .39f;
-    [SerializeField] float percentageGreen = .69f;
-    [SerializeField] Image sliderImage;
+    Image sliderImage;
     // Start is called before the first frame update
     void Start()
     {
         healthContainer = GetComponentInParent<IWithHealth>();
         if (healthContainer == null)
         {
-            throw new System.Exception("Impossible to find the Health Container (A class implementing the IWithHealth interface)");
+            Debug.LogError("Impossible to find the Health Container (A class implementing the IWithHealth interface)");
+            Destroy(this);
         }
-        slider = GetComponent<Slider>();
+        slider = GetComponentInParent<Slider>();
+        sliderImage = GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -27,9 +27,9 @@ public class UpdateOnHealthChange : MonoBehaviour
             //TODO change the warrior Starting health to something parametric (do not assume that this is attached to a warrior)
             float percentage = healthContainer.getCurrentHealth() / GameRules.WarriorStartingHealth();
             slider.SetValueWithoutNotify(percentage);
-            if (percentage <= percentageYellow) sliderImage.color = Color.red;
-            if (percentage > percentageYellow) sliderImage.color = Color.yellow;
-            if (percentage > percentageGreen) sliderImage.color = Color.green;
+            if (percentage <= GameRules.GetYellowValue()) sliderImage.color = Color.red;
+            if (percentage > GameRules.GetYellowValue()) sliderImage.color = Color.yellow;
+            if (percentage > GameRules.GetGreenValue()) sliderImage.color = Color.green;
         }
 
     }

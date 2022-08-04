@@ -7,6 +7,15 @@ public class GameRules
         return 100f;
     }
 
+    public static float GetYellowValue()
+    {
+        return .39f;
+    }
+    public static float GetGreenValue()
+    {
+        return .69f;
+    }
+
     public static float Cost(TileBase t)
     {
         try
@@ -19,5 +28,20 @@ public class GameRules
         {
             return float.PositiveInfinity;
         }
+    }
+
+    internal static float WarriorBaseCombatStrength()
+    {
+        return 10f;
+    }
+
+    internal static float WarriorAttackingProbability()
+    {
+        return .3f;
+    }
+
+    internal static float WarriorDefense()
+    {
+        return 5;
     }
 }
