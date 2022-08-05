@@ -1,14 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDefense, IWithDefensiveTools, IWithOffensiveTools, ICanCombat
+public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDefense, IWithDefensiveTools, IWithOffensiveTools, ICanCombat, IWithLeader
 {
+    public enum Team { A, B };
+
+    [SerializeField] private Team team;
     [SerializeField][Min(0)] private float health;
     [SerializeField][Min(0)] private float baseCombatStrength;
     [SerializeField][Range(0, 1)] private float attackingProbability;
     [SerializeField][Min(0)] private float defense;
-    [SerializeField] List<IDefenseTool> defensiveTools;
-    [SerializeField] List<IOffenseTool> offensiveTools;
+    List<IDefenseTool> defensiveTools;
+    List<IOffenseTool> offensiveTools;
 
     private IOffenseTool selectedTool = null;
 
@@ -44,6 +47,8 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
         baseCombatStrength = GameRules.WarriorBaseCombatStrength();
         attackingProbability = GameRules.WarriorAttackingProbability();
         defense = GameRules.WarriorDefense();
+        defensiveTools = new List<IDefenseTool>();
+        offensiveTools = new List<IOffenseTool>();
     }
 
     public float getDefenseValue()
@@ -63,13 +68,18 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
 
     public void TakeDamage(float value)
     {
-        defensiveTools.Sort(Comparer<IDefenseTool>.Create((x, y) => (int)((x.getDefenseValue() - y.getDefenseValue()) * 1000)));
-        health -= (value - defensiveTools[0].getDefenseValue());
+        if (defensiveTools.Count > 1)
+        {
+            defensiveTools.Sort(Comparer<IDefenseTool>.Create((x, y) => (int)((x.getDefenseValue() - y.getDefenseValue()) * 1000)));
+            value -= defensiveTools[0].getDefenseValue();
+        }
+        health -= value;
     }
 
     public void Attack(IWithHealth opponent)
     {
-        bool outcome = Random.Range(0, 1) >= this.getFinalAttackingProbability();
+        double value = Random.Range(0f, 1f);
+        bool outcome = value >= this.getFinalAttackingProbability();
         if (outcome)
         {
             opponent.TakeDamage(getFinalCombatStrength());
@@ -83,5 +93,10 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
     public void SelectTool(IOffenseTool tool)
     {
         selectedTool = tool;
+    }
+
+    public Team getLeader()
+    {
+        return team;
     }
 }

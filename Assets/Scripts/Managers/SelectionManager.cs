@@ -39,15 +39,32 @@ public class SelectionManager
         if (SelectedMovable != null)
         {
             SelectedMovable.moveTo(selectedTile);
-            Selectable = null;
-            selectedTile = null;
+            clearSelection();
         }
     }
 
     public void Select(Selectable selectable)
     {
-        this.Selectable = selectable;
+        if (Selectable == null)
+        {
+            this.Selectable = selectable;
+            return;
+        }
+        Warrior.Team selectableTeam = selectable.GetComponent<IWithLeader>().getLeader();
+        Warrior.Team selectedTeam = this.Selectable.GetComponent<IWithLeader>().getLeader();
+        if (selectableTeam != selectedTeam)
+        {
+            CombatManager.getInstance().StartFight(Selectable.GetComponent<ICanCombat>(), selectable.GetComponent<ICanCombat>());
+            clearSelection();
+        }
+        else this.Selectable = selectable;
 
+    }
+
+    private void clearSelection()
+    {
+        Selectable = null;
+        selectedTile = null;
     }
 
     private SelectionManager()

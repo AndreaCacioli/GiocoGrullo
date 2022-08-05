@@ -1,4 +1,4 @@
-﻿public interface IWithHealth
+﻿public interface IWithHealth //: ICanCombat
 {
     public float getCurrentHealth();
 
