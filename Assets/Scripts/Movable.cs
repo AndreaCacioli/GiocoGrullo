@@ -53,6 +53,11 @@ public class Movable : MonoBehaviour
 
     }
 
+    public float GetMovementPoints()
+    {
+        return movementPoints;
+    }
+
     internal void moveTo(GraphNode selectedTile)
     {
         if (selectedTile == null) return;
