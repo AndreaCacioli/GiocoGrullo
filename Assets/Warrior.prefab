@@ -791,6 +791,7 @@ MonoBehaviour:
   baseCombatStrength: 0
   attackingProbability: 0
   defense: 0
+  baseNumberOfAttacks: 0
 --- !u!1 &1148429847025930
 GameObject:
   m_ObjectHideFlags: 0
