@@ -2,21 +2,31 @@
 
 public class GameRules
 {
-    public static float WarriorStartingHealth()
+
+    //TODO load values from a file
+    private static GameRules instance;
+    private GameRules() { }
+    public static GameRules getInstance()
+    {
+        if (instance == null) instance = new GameRules();
+        return instance;
+    }
+
+    public float WarriorStartingHealth()
     {
         return 100f;
     }
 
-    public static float GetYellowValue()
+    public float GetYellowValue()
     {
         return .39f;
     }
-    public static float GetGreenValue()
+    public float GetGreenValue()
     {
         return .69f;
     }
 
-    public static float Cost(TileBase t)
+    public float Cost(TileBase t)
     {
         try
         {
@@ -30,18 +40,23 @@ public class GameRules
         }
     }
 
-    internal static float WarriorBaseCombatStrength()
+    public float WarriorBaseCombatStrength()
     {
         return 10f;
     }
 
-    internal static float WarriorAttackingProbability()
+    public float WarriorAttackingProbability()
     {
         return .3f;
     }
 
-    internal static float WarriorDefense()
+    public float WarriorDefense()
     {
         return 5;
+    }
+
+    public uint WarriorBaseNumberOfAttacks()
+    {
+        return 3;
     }
 }

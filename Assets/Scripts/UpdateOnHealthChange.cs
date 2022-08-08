@@ -25,11 +25,11 @@ public class UpdateOnHealthChange : MonoBehaviour
         if (healthContainer != null && slider != null)
         {
             //TODO change the warrior Starting health to something parametric (do not assume that this is attached to a warrior)
-            float percentage = healthContainer.getCurrentHealth() / GameRules.WarriorStartingHealth();
+            float percentage = healthContainer.getCurrentHealth() / GameRules.getInstance().WarriorStartingHealth();
             slider.SetValueWithoutNotify(percentage);
-            if (percentage <= GameRules.GetYellowValue()) sliderImage.color = Color.red;
-            if (percentage > GameRules.GetYellowValue()) sliderImage.color = Color.yellow;
-            if (percentage > GameRules.GetGreenValue()) sliderImage.color = Color.green;
+            if (percentage <= GameRules.getInstance().GetYellowValue()) sliderImage.color = Color.red;
+            if (percentage > GameRules.getInstance().GetYellowValue()) sliderImage.color = Color.yellow;
+            if (percentage > GameRules.getInstance().GetGreenValue()) sliderImage.color = Color.green;
         }
 
     }

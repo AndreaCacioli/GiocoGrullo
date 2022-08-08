@@ -10,7 +10,7 @@ public class GraphNode
     public GraphNode(TileBase t)
     {
         this.tileBase = t;
-        travellingCost = GameRules.Cost(t);
+        travellingCost = GameRules.getInstance().Cost(t);
         neighbours = new List<GraphNode>();
     }
     public void addNeighbour(GraphNode graphNode)

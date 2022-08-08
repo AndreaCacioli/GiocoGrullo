@@ -10,10 +10,12 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
     [SerializeField][Min(0)] private float baseCombatStrength;
     [SerializeField][Range(0, 1)] private float attackingProbability;
     [SerializeField][Min(0)] private float defense;
+    [SerializeField] private uint baseNumberOfAttacks;
     List<IDefenseTool> defensiveTools;
     List<IOffenseTool> offensiveTools;
 
     private IOffenseTool selectedTool = null;
+
 
     public float getAttackingProbability()
     {
@@ -43,10 +45,11 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
     // Start is called before the first frame update
     void Start()
     {
-        health = GameRules.WarriorStartingHealth();
-        baseCombatStrength = GameRules.WarriorBaseCombatStrength();
-        attackingProbability = GameRules.WarriorAttackingProbability();
-        defense = GameRules.WarriorDefense();
+        health = GameRules.getInstance().WarriorStartingHealth();
+        baseCombatStrength = GameRules.getInstance().WarriorBaseCombatStrength();
+        attackingProbability = GameRules.getInstance().WarriorAttackingProbability();
+        defense = GameRules.getInstance().WarriorDefense();
+        baseNumberOfAttacks = GameRules.getInstance().WarriorBaseNumberOfAttacks();
         defensiveTools = new List<IDefenseTool>();
         offensiveTools = new List<IOffenseTool>();
     }
@@ -98,5 +101,16 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
     public Team getLeader()
     {
         return team;
+    }
+
+    public IOffenseTool getSelectedTool()
+    {
+        return selectedTool;
+    }
+
+    public uint getNumberOfAttacks()
+    {
+        if (selectedTool == null) return baseNumberOfAttacks;
+        else return selectedTool.getNumberOfAttacks();
     }
 }
