@@ -29,7 +29,7 @@ internal class Animated : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canvas != null && movable != null) canvas.gameObject.SetActive(SelectionManager.getInstance().SelectedMovable == movable);
+        if (canvas != null && movable != null) canvas.enabled = SelectionManager.getInstance().SelectedMovable == movable || CombatManager.getInstance().isFighting(GetComponent<Warrior>());
         if (movable != null) animator.SetBool("IsRunning", movable.IsRunning);
         if (movable != null) animator.SetBool("Action", movable.IsRunning);
         if (healthContainer != null && healthContainer.getCurrentHealth() <= 0) animator.SetTrigger("Die");

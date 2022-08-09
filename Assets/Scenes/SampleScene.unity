@@ -722,26 +722,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6737321045792431100, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6737321045792431100, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6737321045843593411, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6737321045843593411, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6737321045843593411, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7284326854665982119, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -750,12 +730,8 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8494049276433533069, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8494049276433533069, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
-      propertyPath: m_AnchorMax.y
+    - target: {fileID: 8235447737610184552, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
+      propertyPath: team
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1211,10 +1187,6 @@ PrefabInstance:
     - target: {fileID: 7284326854665982119, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8235447737610184552, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
-      propertyPath: team
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}

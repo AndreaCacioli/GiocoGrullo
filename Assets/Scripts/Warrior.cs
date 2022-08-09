@@ -6,7 +6,20 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
     public enum Team { A, B };
 
     [SerializeField] private Team team;
-    [SerializeField][Min(0)] private float health;
+    [SerializeField][Min(0)] private float _health;
+    public float Health
+    {
+        get
+        {
+            return _health;
+        }
+        private set
+        {
+            float diff = value - _health;
+            _health = value;
+            onHealthChanged?.Invoke(diff);
+        }
+    }
     [SerializeField][Min(0)] private float baseCombatStrength;
     [SerializeField][Range(0, 1)] private float attackingProbability;
     [SerializeField][Min(0)] private float defense;
@@ -16,6 +29,7 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
 
     private IOffenseTool selectedTool = null;
 
+    public event IWithHealth.takenDamage onHealthChanged;
 
     public float getAttackingProbability()
     {
@@ -39,13 +53,13 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
 
     public float getCurrentHealth()
     {
-        return health;
+        return Health;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        health = GameRules.getInstance().WarriorStartingHealth();
+        Health = GameRules.getInstance().WarriorStartingHealth();
         baseCombatStrength = GameRules.getInstance().WarriorBaseCombatStrength();
         attackingProbability = GameRules.getInstance().WarriorAttackingProbability();
         defense = GameRules.getInstance().WarriorDefense();
@@ -76,7 +90,8 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
             defensiveTools.Sort(Comparer<IDefenseTool>.Create((x, y) => (int)((x.getDefenseValue() - y.getDefenseValue()) * 1000)));
             value -= defensiveTools[0].getDefenseValue();
         }
-        health -= value;
+        Health -= value;
+        if (Health <= 0f) Health = 0f;
     }
 
     public void Attack(IWithHealth opponent)

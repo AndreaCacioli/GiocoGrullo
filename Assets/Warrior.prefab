@@ -747,7 +747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 734b1394f85a04584bc052c9b3b5a49a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vision: 6
+  vision: 313
   movementPoints: 6
   speed: 10
 --- !u!114 &3102591839090490926
@@ -786,8 +786,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 577b71cd74f69bf4f801ae6645e1f2ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 0
-  health: 0
+  team: 1
+  _health: 0
   baseCombatStrength: 0
   attackingProbability: 0
   defense: 0
@@ -27583,6 +27583,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pawn UI
       objectReference: {fileID: 0}
+    - target: {fileID: 310304876590657071, guid: 2da2e2a132125bb458d04d502d6a5f32, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 789781434190841204, guid: 2da2e2a132125bb458d04d502d6a5f32, type: 3}
+      propertyPath: smoothing
+      value: 0.948
+      objectReference: {fileID: 0}
+    - target: {fileID: 789781434190841204, guid: 2da2e2a132125bb458d04d502d6a5f32, type: 3}
+      propertyPath: sampleText
+      value: 
+      objectReference: {fileID: 5917854907772362177, guid: d913c89a5fbb9384abce26e75ee7ee46, type: 3}
     - target: {fileID: 3252548505606912123, guid: 2da2e2a132125bb458d04d502d6a5f32, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -388.18115
@@ -27602,3 +27614,23 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 310304876590657066, guid: 2da2e2a132125bb458d04d502d6a5f32, type: 3}
   m_PrefabInstance: {fileID: 6409469788039770802}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6682618867119070361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 310304876590657067, guid: 2da2e2a132125bb458d04d502d6a5f32, type: 3}
+  m_PrefabInstance: {fileID: 6409469788039770802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8881522886836792992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6682618867119070361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd6ecb9b6725bf640b0af6b386149d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sampleText: {fileID: 7403691301747378704, guid: d913c89a5fbb9384abce26e75ee7ee46, type: 3}
+  damageTextVisibilityTime: 1
+  radius: 1

@@ -54,7 +54,7 @@ public class SelectionManager
         Warrior.Team selectedTeam = this.Selectable.GetComponent<IWithLeader>().getLeader();
         if (selectableTeam != selectedTeam)
         {
-            CombatManager.getInstance().StartFight(Selectable.GetComponent<ICanCombat>(), selectable.GetComponent<ICanCombat>());
+            selectable.StartCoroutine(CombatManager.getInstance().StartFight(Selectable.GetComponent<ICanCombat>(), selectable.GetComponent<ICanCombat>()));
             clearSelection();
         }
         else this.Selectable = selectable;
