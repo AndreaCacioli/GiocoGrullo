@@ -747,7 +747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 734b1394f85a04584bc052c9b3b5a49a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vision: 313
+  vision: 6
   movementPoints: 6
   speed: 10
 --- !u!114 &3102591839090490926
@@ -762,6 +762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5bedc5e740ac46988feeaefa9fa28b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeOutSpeed: 0.2
 --- !u!114 &2809247720222801835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3540,7 +3541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0105e23e272418c94b0bbf1e7d02dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationEvents: {fileID: 114289190016055086}
+  AnimationEvents: {fileID: 0}
   Params:
     Name: OldShotgun
     FirearmTexture: {fileID: 2800000, guid: d722dc4d8c1c2ce4e833251bfd43b528, type: 3}
@@ -4969,7 +4970,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4137128368968656}
   - component: {fileID: 95570844872250018}
-  - component: {fileID: 114289190016055086}
   m_Layer: 0
   m_Name: Animation
   m_TagString: Untagged
@@ -5005,7 +5005,7 @@ Animator:
   m_GameObject: {fileID: 1757109360518274}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0acc6d8cc6cc44ce9eafa9ecf65691be, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7e39b0e4a0c289b40a0fb3882113a599, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5015,18 +5015,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114289190016055086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757109360518274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1db3728f3e374091b4966199eb8dd2cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1760107730670166
 GameObject:
   m_ObjectHideFlags: 0
@@ -27167,7 +27155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67bdb88bfca3491eb2d33868fd2caa10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationEvents: {fileID: 114289190016055086}
+  AnimationEvents: {fileID: 0}
   Edge: {fileID: 4058613315571086106}
 --- !u!1 &4055335648355417868
 GameObject:

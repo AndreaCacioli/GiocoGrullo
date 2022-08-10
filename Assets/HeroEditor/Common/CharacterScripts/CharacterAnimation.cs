@@ -13,12 +13,12 @@ namespace Assets.HeroEditor.Common.CharacterScripts
 
         public void GetReady()
         {
-            Animator.SetBool("Ready", true);
+            //Animator.SetBool("Ready", true);
         }
 
         public void Relax()
         {
-            Animator.SetBool("Ready", false);
+            //Animator.SetBool("Ready", false);
         }
 
         public bool IsReady()
@@ -40,7 +40,7 @@ namespace Assets.HeroEditor.Common.CharacterScripts
                     break;
             }
 
-            Animator.SetInteger("State", (int) state);
+            //Animator.SetInteger("State", (int) state);
         }
 
         public CharacterState GetState()

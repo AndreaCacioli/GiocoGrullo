@@ -18,12 +18,12 @@ namespace Assets.HeroEditor.Common.ExampleScripts
         /// </summary>
         public void Start()
         {
-            AnimationEvents.OnCustomEvent += OnAnimationEvent;
+            //AnimationEvents.OnCustomEvent += OnAnimationEvent;
         }
 
         public void OnDestroy()
         {
-            AnimationEvents.OnCustomEvent -= OnAnimationEvent;
+            //AnimationEvents.OnCustomEvent -= OnAnimationEvent;
         }
 
         private void OnAnimationEvent(string eventName)

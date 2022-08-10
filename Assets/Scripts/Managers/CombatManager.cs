@@ -27,9 +27,11 @@ public class CombatManager
         fighters.Add(defender);
         if (defender is IWithHealth && attacker is IWithHealth)
         {
+            IWithHealth attackerContainer = (IWithHealth)attacker;
+            IWithHealth defenderContainer = (IWithHealth)defender;
             uint i = ((IWithOffensiveTools)attacker).getNumberOfAttacks();
             uint j = ((IWithOffensiveTools)defender).getNumberOfAttacks();
-            while (i > 0 || j > 0)
+            while ((i > 0 || j > 0) && attackerContainer.getCurrentHealth() > 0 && defenderContainer.getCurrentHealth() > 0)
             {
                 if (i > 0)
                 {

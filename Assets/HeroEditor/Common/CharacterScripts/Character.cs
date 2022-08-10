@@ -163,7 +163,7 @@ namespace Assets.HeroEditor.Common.CharacterScripts
 
             var state = 100 * (int) WeaponType;
 
-            Animator.SetInteger("WeaponType", (int) WeaponType);
+            //Animator.SetInteger("WeaponType", (int) WeaponType);
 
             if ((WeaponType == WeaponType.Firearms1H || WeaponType == WeaponType.Firearms2H || WeaponType == WeaponType.FirearmsPaired) && Firearm.Params != null)
             {

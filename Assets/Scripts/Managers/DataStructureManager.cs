@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 public class DataStructureManager
 {
     private static DataStructureManager instance = null;
-
+    private Tilemap tilemap = null;
     private static Dictionary<Vector3Int, GraphNode> dictionary;
 
     private DataStructureManager()
@@ -26,12 +26,19 @@ public class DataStructureManager
     internal GraphNode getNode(Vector3Int selectedCellCoord)
     {
         GraphNode ret;
+        selectedCellCoord.z = 0;
         dictionary.TryGetValue(selectedCellCoord, out ret);
         return ret;
     }
 
+    public GraphNode getNode(Vector3 worldCoordinates)
+    {
+        return getNode(tilemap.WorldToCell(worldCoordinates));
+    }
+
     public void initializeWithTilemap(Tilemap tilemap)
     {
+        this.tilemap = tilemap;
         if (tilemap != null)
         {
             for (int x = tilemap.cellBounds.min.x; x < tilemap.cellBounds.max.x; x++)
@@ -81,6 +88,11 @@ public class DataStructureManager
             }
 
         }
+    }
+
+    internal bool areNeighbours(GraphNode tile1, GraphNode tile2)
+    {
+        return tile1 != null && tile2 != null && tile1.getNeighbours().Contains(tile2) && tile2.getNeighbours().Contains(tile1);
     }
 
     internal Vector3Int getCoordinates(TileBase selectedTile)

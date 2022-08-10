@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 internal class Animated : MonoBehaviour
@@ -7,13 +8,16 @@ internal class Animated : MonoBehaviour
     private Animator animator;
     Selectable selectable;
     private IWithHealth healthContainer;
+    private SpriteRenderer[] sprites;
+    private BoxCollider2D collider;
+    [SerializeField] private float fadeOutSpeed;
 
-    //Used to only show the selection animation once
-    private bool done = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        collider = GetComponent<BoxCollider2D>();
+        sprites = GetComponentsInChildren<SpriteRenderer>();
         if (!TryGetComponent<Animator>(out animator)) animator = GetComponentInChildren<Animator>();
         if (animator == null)
         {
@@ -24,6 +28,48 @@ internal class Animated : MonoBehaviour
         canvas = GetComponentInChildren<Canvas>();
         healthContainer = GetComponentInParent<IWithHealth>();
         selectable = GetComponent<Selectable>();
+        SelectionManager.OnSelectionChanged += onSelection;
+        if (healthContainer != null) healthContainer.onHealthChanged += dieOnHealthBelowZero;
+    }
+
+    private void OnDestroy()
+    {
+        SelectionManager.OnSelectionChanged -= onSelection;
+        if (healthContainer != null) healthContainer.onHealthChanged -= dieOnHealthBelowZero;
+    }
+
+    private IEnumerator fadeOut()
+    {
+        float start = sprites[0].color.a;
+        while (start > 0)
+        {
+            foreach (SpriteRenderer sprite in sprites)
+            {
+                Color color = sprite.color;
+                color.a -= fadeOutSpeed * Time.deltaTime;
+                sprite.color = color;
+            }
+            yield return null;
+        }
+    }
+
+    private void dieOnHealthBelowZero(float amount)
+    {
+        if (healthContainer.getCurrentHealth() <= 0)
+        {
+            animator.SetTrigger("Die");
+            Destroy(gameObject, 10f);
+            Destroy(collider);
+            StartCoroutine(fadeOut());
+        }
+    }
+
+    private void onSelection()
+    {
+        if (selectable != null && selectable == SelectionManager.getInstance().Selectable)
+        {
+            animator.SetTrigger("Hit");
+        }
     }
 
     // Update is called once per frame
@@ -31,20 +77,6 @@ internal class Animated : MonoBehaviour
     {
         if (canvas != null && movable != null) canvas.enabled = SelectionManager.getInstance().SelectedMovable == movable || CombatManager.getInstance().isFighting(GetComponent<Warrior>());
         if (movable != null) animator.SetBool("IsRunning", movable.IsRunning);
-        if (movable != null) animator.SetBool("Action", movable.IsRunning);
-        if (healthContainer != null && healthContainer.getCurrentHealth() <= 0) animator.SetTrigger("Die");
         //TODO implement attack when we setup the combat system
-
-
-        if (!done && selectable != null && selectable == SelectionManager.getInstance().Selectable)
-        {
-            animator.SetTrigger("Hit");
-            done = true;
-        }
-        if (done)
-        {
-            if (selectable != null && selectable != SelectionManager.getInstance().Selectable) done = false;
-        }
-
     }
 }
