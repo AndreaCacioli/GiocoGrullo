@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Tilemaps;
 
+//TODO decide if you want to keep this or move to ScriptableObjects
 public class GameRules
 {
 

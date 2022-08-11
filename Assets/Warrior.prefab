@@ -388,6 +388,7 @@ GameObject:
   - component: {fileID: 3102591839090490926}
   - component: {fileID: 2809247720222801835}
   - component: {fileID: 8235447737610184552}
+  - component: {fileID: 2131869169}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Untagged
@@ -793,6 +794,22 @@ MonoBehaviour:
   attackingProbability: 0
   defense: 0
   baseNumberOfAttacks: 0
+  offensiveTools:
+  - {fileID: 11400000, guid: 67aa90e6f5855e3499175fb7b352ad87, type: 2}
+  - {fileID: 11400000, guid: 834d46bb4e567d941a8558aaef129c33, type: 2}
+  _selectedTool: {fileID: 0}
+--- !u!114 &2131869169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109987028385428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43eaa3666421f814295d1e0c6020e17a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1148429847025930
 GameObject:
   m_ObjectHideFlags: 0

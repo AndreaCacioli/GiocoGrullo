@@ -1,4 +1,4 @@
-﻿public interface IWithHealth //: ICanCombat
+﻿public interface IWithHealth : ICanCombat
 {
     public delegate void takenDamage(float amount);
     public event takenDamage onHealthChanged;

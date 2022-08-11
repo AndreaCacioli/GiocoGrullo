@@ -25,11 +25,27 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
     [SerializeField][Min(0)] private float defense;
     [SerializeField] private uint baseNumberOfAttacks;
     List<IDefenseTool> defensiveTools;
-    List<IOffenseTool> offensiveTools;
+    [SerializeField] List<Weapon> offensiveTools;
 
-    private IOffenseTool selectedTool = null;
+    [SerializeField] private Weapon _selectedTool = null;
+
+    public Weapon SelectedTool
+    {
+        get
+        {
+            return _selectedTool;
+        }
+        set
+        {
+            _selectedTool = value;
+            onOffensiveToolChanged?.Invoke(value);
+        }
+    }
+
 
     public event IWithHealth.takenDamage onHealthChanged;
+
+    public event IWithOffensiveTools.OffensiveToolChangedHandler onOffensiveToolChanged;
 
     public float getAttackingProbability()
     {
@@ -38,8 +54,8 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
 
     public float getFinalAttackingProbability()
     {
-        if (selectedTool == null) return getAttackingProbability();
-        else return selectedTool.getHittingProbability();
+        if (SelectedTool == null) return getAttackingProbability();
+        else return SelectedTool.getHittingProbability();
     }
 
     public float getBaseCombatStrength()
@@ -48,7 +64,7 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
     }
     public float getFinalCombatStrength()
     {
-        return selectedTool == null ? baseCombatStrength : selectedTool.getStrength();
+        return SelectedTool == null ? baseCombatStrength : SelectedTool.getStrength();
     }
 
     public float getCurrentHealth()
@@ -65,7 +81,7 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
         defense = GameRules.getInstance().WarriorDefense();
         baseNumberOfAttacks = GameRules.getInstance().WarriorBaseNumberOfAttacks();
         defensiveTools = new List<IDefenseTool>();
-        offensiveTools = new List<IOffenseTool>();
+        if (offensiveTools.Count >= 1) SelectedTool = offensiveTools[0];
     }
 
     public float getDefenseValue()
@@ -97,7 +113,7 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
     public void Attack(IWithHealth opponent)
     {
         double value = Random.Range(0f, 1f);
-        bool outcome = value >= this.getFinalAttackingProbability();
+        bool outcome = value <= this.getFinalAttackingProbability();
         if (outcome)
         {
             opponent.TakeDamage(getFinalCombatStrength());
@@ -110,7 +126,8 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
 
     public void SelectTool(IOffenseTool tool)
     {
-        selectedTool = tool;
+        if (tool == null) SelectedTool = null;
+        else if (tool is Weapon) SelectedTool = (Weapon)tool;
     }
 
     public Team getLeader()
@@ -120,12 +137,12 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
 
     public IOffenseTool getSelectedTool()
     {
-        return selectedTool;
+        return SelectedTool;
     }
 
     public uint getNumberOfAttacks()
     {
-        if (selectedTool == null) return baseNumberOfAttacks;
-        else return selectedTool.getNumberOfAttacks();
+        if (SelectedTool == null) return baseNumberOfAttacks;
+        else return SelectedTool.getNumberOfAttacks();
     }
 }

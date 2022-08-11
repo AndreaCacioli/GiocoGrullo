@@ -738,6 +738,18 @@ PrefabInstance:
       propertyPath: team
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8235447737610184552, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
+      propertyPath: selectedTool
+      value: 
+      objectReference: {fileID: 11400000, guid: 834d46bb4e567d941a8558aaef129c33, type: 2}
+    - target: {fileID: 8235447737610184552, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
+      propertyPath: offensiveTools.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8235447737610184552, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
+      propertyPath: offensiveTools.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 834d46bb4e567d941a8558aaef129c33, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20fe794adf5a6a940b53fdd5976bc826, type: 3}
 --- !u!1 &401527170
@@ -2474,7 +2486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4863450253599147050, guid: c1b90d0be09d39045b2fd534b1402db6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.8
+      value: -4.84
       objectReference: {fileID: 0}
     - target: {fileID: 4863450253599147050, guid: c1b90d0be09d39045b2fd534b1402db6, type: 3}
       propertyPath: m_LocalPosition.z

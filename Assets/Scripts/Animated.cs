@@ -9,14 +9,14 @@ internal class Animated : MonoBehaviour
     Selectable selectable;
     private IWithHealth healthContainer;
     private SpriteRenderer[] sprites;
-    private BoxCollider2D collider;
+    private BoxCollider2D col;
     [SerializeField] private float fadeOutSpeed;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        collider = GetComponent<BoxCollider2D>();
+        col = GetComponent<BoxCollider2D>();
         sprites = GetComponentsInChildren<SpriteRenderer>();
         if (!TryGetComponent<Animator>(out animator)) animator = GetComponentInChildren<Animator>();
         if (animator == null)
@@ -59,7 +59,7 @@ internal class Animated : MonoBehaviour
         {
             animator.SetTrigger("Die");
             Destroy(gameObject, 10f);
-            Destroy(collider);
+            Destroy(col);
             StartCoroutine(fadeOut());
         }
     }
