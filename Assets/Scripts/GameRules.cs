@@ -60,4 +60,19 @@ public class GameRules
     {
         return 3;
     }
+
+    internal bool battlesHaveCritDamage()
+    {
+        return true;
+    }
+
+    internal double critRate()
+    {
+        return .2;
+    }
+
+    internal float critMultiplier()
+    {
+        return 1.25f;
+    }
 }

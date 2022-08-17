@@ -22,6 +22,13 @@ public class Movable : MonoBehaviour
         mapTilemap = FindObjectOfType<Map>().GetComponentInChildren<Tilemap>();
     }
 
+    public static void LookAt(GameObject toRotate, Vector3 target)
+    {
+        var x = Mathf.Abs(toRotate.transform.localScale.x);
+        if (target.x < toRotate.transform.position.x) toRotate.transform.localScale = new Vector3(-x, toRotate.transform.localScale.y, toRotate.transform.localScale.z);
+        else toRotate.transform.localScale = new Vector3(x, toRotate.transform.localScale.y, toRotate.transform.localScale.z);
+
+    }
     void Update()
     {
         if (Vector3.Distance(destination, transform.position) > .1f)
@@ -36,9 +43,7 @@ public class Movable : MonoBehaviour
                 if (path.Count > 0)
                 {
                     destination = path[0];
-                    var x = Mathf.Abs(transform.localScale.x);
-                    if (destination.x < transform.position.x) transform.localScale = new Vector3(-x, transform.localScale.y, transform.localScale.z);
-                    else transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
+                    Movable.LookAt(gameObject, destination);
                     path.RemoveAt(0);
                 }
                 else

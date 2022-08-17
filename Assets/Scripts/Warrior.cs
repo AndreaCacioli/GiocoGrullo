@@ -46,6 +46,7 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
     public event IWithHealth.takenDamage onHealthChanged;
 
     public event IWithOffensiveTools.OffensiveToolChangedHandler onOffensiveToolChanged;
+    public event ICanCombat.OnAttackHandler onAttack;
 
     public float getAttackingProbability()
     {
@@ -116,12 +117,23 @@ public class Warrior : MonoBehaviour, IWithHealth, IWithCombatStrength, IWithDef
         bool outcome = value <= this.getFinalAttackingProbability();
         if (outcome)
         {
-            opponent.TakeDamage(getFinalCombatStrength());
+            float finalValue = getFinalCombatStrength();
+            if (GameRules.getInstance().battlesHaveCritDamage())
+            {
+                double value2 = Random.Range(0f, 1f);
+                bool crit = value2 <= GameRules.getInstance().critRate();
+                if (crit)
+                {
+                    finalValue *= GameRules.getInstance().critMultiplier();
+                }
+            }
+            opponent.TakeDamage(finalValue);
         }
         else
         {
             opponent.TakeDamage(0);
         }
+        onAttack?.Invoke(((MonoBehaviour)opponent).gameObject);
     }
 
     public void SelectTool(IOffenseTool tool)

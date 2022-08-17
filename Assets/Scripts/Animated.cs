@@ -8,9 +8,10 @@ internal class Animated : MonoBehaviour
     private Animator animator;
     Selectable selectable;
     private IWithHealth healthContainer;
+    private ICanCombat combatScript;
     private SpriteRenderer[] sprites;
     private BoxCollider2D col;
-    [SerializeField] private float fadeOutSpeed;
+    [SerializeField] private float deathFadeOutSpeed;
 
 
     // Start is called before the first frame update
@@ -28,14 +29,39 @@ internal class Animated : MonoBehaviour
         canvas = GetComponentInChildren<Canvas>();
         healthContainer = GetComponentInParent<IWithHealth>();
         selectable = GetComponent<Selectable>();
+        combatScript = GetComponent<ICanCombat>();
+
+
+        //Events
         SelectionManager.OnSelectionChanged += onSelection;
         if (healthContainer != null) healthContainer.onHealthChanged += dieOnHealthBelowZero;
+        if (combatScript != null) combatScript.onAttack += swingWeapon;
+        if (combatScript != null) combatScript.onAttack += lookAtEnemy;
     }
+
+    private void lookAtEnemy(GameObject enemy)
+    {
+        if (enemy.transform.position.x < transform.position.x)
+        {
+            Movable.LookAt(gameObject, enemy.transform.position);
+        }
+    }
+
 
     private void OnDestroy()
     {
         SelectionManager.OnSelectionChanged -= onSelection;
         if (healthContainer != null) healthContainer.onHealthChanged -= dieOnHealthBelowZero;
+        if (combatScript != null)
+        {
+            combatScript.onAttack -= swingWeapon;
+            combatScript.onAttack -= lookAtEnemy;
+        }
+    }
+
+    private void swingWeapon(GameObject enemy)
+    {
+        animator.SetTrigger("Attack");
     }
 
     private IEnumerator fadeOut()
@@ -46,7 +72,7 @@ internal class Animated : MonoBehaviour
             foreach (SpriteRenderer sprite in sprites)
             {
                 Color color = sprite.color;
-                color.a -= fadeOutSpeed * Time.deltaTime;
+                color.a -= deathFadeOutSpeed * Time.deltaTime;
                 sprite.color = color;
             }
             yield return null;
