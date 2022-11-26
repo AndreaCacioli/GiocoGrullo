@@ -1,9 +1,10 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpdateUIOnSelection : MonoBehaviour
 {
-    [SerializeField] Canvas canvas;
+    [SerializeField] GameObject panel;
     [SerializeField] TextMeshProUGUI NameText;
     [SerializeField] TextMeshProUGUI StepsText;
     [SerializeField] TextMeshProUGUI HealthText;
@@ -21,7 +22,7 @@ public class UpdateUIOnSelection : MonoBehaviour
     private void handleGUI()
     {
         Selectable newSelectable = SelectionManager.getInstance().Selectable;
-        canvas.enabled = newSelectable != null;
+        panel.SetActive(newSelectable != null);
 
         if (newSelectable == null) return;
 

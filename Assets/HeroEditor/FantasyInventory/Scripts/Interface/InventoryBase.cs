@@ -256,7 +256,7 @@ namespace Assets.HeroEditor.FantasyInventory.Scripts.Interface
         }
 
         /// <summary>
-        /// Automatically removes items if target slot is busy.
+        /// Automatically removes itemsManager if target slot is busy.
         /// </summary>
         private void AutoRemove(List<Item> items, int max = 1)
         {

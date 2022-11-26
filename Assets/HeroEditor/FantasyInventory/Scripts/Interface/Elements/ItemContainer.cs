@@ -11,12 +11,12 @@ namespace Assets.HeroEditor.FantasyInventory.Scripts.Interface.Elements
     public abstract class ItemContainer : MonoBehaviour
     {
         /// <summary>
-        /// List of items.
+        /// List of itemsManager.
         /// </summary>
         public List<Item> Items { get; protected set; } = new List<Item>();
 
         /// <summary>
-        /// Either all items are expanded (i.e. item count = 1, so two equal items will be stored as two list elements).
+        /// Either all itemsManager are expanded (i.e. item count = 1, so two equal itemsManager will be stored as two list elements).
         /// </summary>
         public bool Expanded;
         public bool SelectOnRefresh = true;

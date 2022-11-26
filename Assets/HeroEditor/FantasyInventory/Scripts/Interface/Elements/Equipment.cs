@@ -16,12 +16,12 @@ namespace Assets.HeroEditor.FantasyInventory.Scripts.Interface.Elements
         public Action OnRefresh;
 
         /// <summary>
-        /// Defines what kinds of items can be equipped.
+        /// Defines what kinds of itemsManager can be equipped.
         /// </summary>
         public List<ItemSlot> Slots;
 
         /// <summary>
-        /// Equipped items will be instantiated in front of equipment slots.
+        /// Equipped itemsManager will be instantiated in front of equipment slots.
         /// </summary>
         public InventoryItem ItemPrefab;
 

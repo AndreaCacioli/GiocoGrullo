@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Assets.HeroEditor.FantasyInventory.Scripts.Interface.Elements
 {
     /// <summary>
-    /// Represents equipment slot. Inventory items can be placed here.
+    /// Represents equipment slot. Inventory itemsManager can be placed here.
     /// </summary>
     public class ItemSlot : MonoBehaviour
     {

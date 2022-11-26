@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Assets.HeroEditor.FantasyInventory.Scripts.Data
 {
     /// <summary>
-    /// Represents generic item params (common for all items).
+    /// Represents generic item params (common for all itemsManager).
     /// </summary>
     [Serializable]
     public class ItemParams

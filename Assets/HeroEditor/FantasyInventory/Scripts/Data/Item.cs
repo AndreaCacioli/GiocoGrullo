@@ -10,7 +10,7 @@ namespace Assets.HeroEditor.FantasyInventory.Scripts.Data
     [Serializable]
     public class Item
     {
-        public string Id; // Id is not unique. Use Hash to compare items!
+        public string Id; // Id is not unique. Use Hash to compare itemsManager!
         public Modifier Modifier;
         public int Count;
 
