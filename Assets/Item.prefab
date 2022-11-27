@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 1145836860102969670}
   - component: {fileID: 1145836860102969664}
   - component: {fileID: 1145836860102969671}
-  - component: {fileID: 3133102588002450088}
+  - component: {fileID: 6292220283409997728}
   m_Layer: 0
   m_Name: Item
   m_TagString: Untagged
@@ -104,7 +104,7 @@ RectTransform:
   m_GameObject: {fileID: 1145836860102969669}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.12, y: 1.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1145836861251679975}
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3133102588002450088
+--- !u!114 &6292220283409997728
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -561,19 +561,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1145836860897453333}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3133102588002450088}
-        m_TargetAssemblyTypeName: ShopItem, Assembly-CSharp
-        m_MethodName: scrollLeft
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1145836861251679974
 GameObject:
   m_ObjectHideFlags: 0

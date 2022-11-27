@@ -5,7 +5,8 @@ public class Shop : MonoBehaviour
     ShopManager itemsManager = null;
     [SerializeField] private ShopItem itemViewTemplate;
     [SerializeField] private GameObject itemPosition;
-    private int indexOfShownElement = 5;
+    [SerializeField] private float itemScale = .6f;
+    private int indexOfShownElement = 0;
 
 
     void Start()
@@ -29,6 +30,7 @@ public class Shop : MonoBehaviour
 
     private void refreshView(IBuyable[] newList)
     {
+        if (newList == null) return;
         var children = gameObject.GetComponentsInChildren<Transform>(true);
         foreach (Transform toBeDestroyed in children)
         {
@@ -37,9 +39,9 @@ public class Shop : MonoBehaviour
 
         GameObject child = Instantiate(itemViewTemplate.gameObject, itemPosition.transform.position, Quaternion.identity);
         child.transform.SetParent(transform);
+        child.transform.localScale = new Vector3(itemScale, itemScale, 1);
         var shopItem = child.GetComponent<ShopItem>();
         shopItem.price = newList[indexOfShownElement].getPrice();
         shopItem.image = newList[indexOfShownElement].getImage();
-        shopItem.shop = this;
     }
 }

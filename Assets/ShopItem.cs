@@ -4,14 +4,6 @@ using UnityEngine.UI;
 
 public class ShopItem : MonoBehaviour
 {
-    /// ////////////////
-    //TODO Remove This!!!
-    [SerializeField] public Shop shop;
-    public void scrollLeft()
-    {
-        shop.scrollLeft();
-    }
-    /// ////////////////////////////////////////////
     private Sprite _image;
     public Sprite image
     {
@@ -19,7 +11,7 @@ public class ShopItem : MonoBehaviour
         set
         {
             _image = value;
-            GetComponentInChildren<Image>().overrideSprite = value;
+            GetComponent<Image>().overrideSprite = value;
         }
     }
 
