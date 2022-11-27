@@ -30,6 +30,7 @@ public class Shop : MonoBehaviour
     void Start()
     {
         itemsManager = ShopManager.getInstance();
+        itemsManager.OnShopListChanged += (value) => { indexOfShownElement = 0; };
         itemsManager.OnShopListChanged += refreshView;
     }
 

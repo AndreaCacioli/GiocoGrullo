@@ -5,6 +5,16 @@ public class Selectable : MonoBehaviour
 {
     Tilemap tilemap;
     FogOfWar fogOfWar;
+    bool working = true;
+
+    private void OnDisable()
+    {
+        working = false;
+    }
+    private void OnEnable()
+    {
+        working = true;
+    }
 
     private void Start()
     {
@@ -15,28 +25,31 @@ public class Selectable : MonoBehaviour
 
     private void OnMouseDown()
     {
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-        if (hit.collider == null) return;
-
-        if (tilemap == null)
+        if (working)
         {
-            Debug.Log("Selected a non-tilemap ~" + gameObject.name);
-            SelectionManager.getInstance().Select(this);
-        }
-        else
-        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit.collider == null) return;
 
-            Debug.Log("Selected a tilemap ~" + gameObject.name);
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int selectedCellCoord = tilemap.WorldToCell(mousePosition);
-            selectedCellCoord.z = 0;
-            if (fogOfWar.isVisible(mousePosition))
+            if (tilemap == null)
             {
-                SelectionManager.getInstance().Select(DataStructureManager.getInstance().getNode(selectedCellCoord));
+                Debug.Log("Selected a non-tilemap ~" + gameObject.name);
+                SelectionManager.getInstance().Select(this);
             }
             else
             {
-                //TODO make it possible to preselect the tile even if it is not visible
+
+                Debug.Log("Selected a tilemap ~" + gameObject.name);
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3Int selectedCellCoord = tilemap.WorldToCell(mousePosition);
+                selectedCellCoord.z = 0;
+                if (fogOfWar.isVisible(mousePosition))
+                {
+                    SelectionManager.getInstance().Select(DataStructureManager.getInstance().getNode(selectedCellCoord));
+                }
+                else
+                {
+                    //TODO make it possible to preselect the tile even if it is not visible
+                }
             }
         }
     }

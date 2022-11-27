@@ -5,9 +5,10 @@ public class SelectionManager
 
     private static SelectionManager instance = null;
 
+    //THINGS THAT CAN BE SELECTED
     private GraphNode selectedTile;
-
     private Selectable _selectable;
+    //////////////////////////////
 
     public Selectable Selectable
     {
@@ -21,7 +22,6 @@ public class SelectionManager
             }
         }
     }
-
 
     public Movable SelectedMovable
     {
@@ -50,16 +50,21 @@ public class SelectionManager
             this.Selectable = selectable;
             return;
         }
-        Warrior.Team selectableTeam = selectable.GetComponent<IWithLeader>().getLeader();
-        Warrior.Team selectedTeam = Selectable.GetComponent<IWithLeader>().getLeader();
-        GraphNode tile1 = DataStructureManager.getInstance().getNode(Selectable.transform.position);
-        GraphNode tile2 = DataStructureManager.getInstance().getNode(selectable.transform.position);
-        if (selectableTeam != selectedTeam && DataStructureManager.getInstance().areNeighbours(tile1, tile2))
+        IWithLeader withLeader1 = selectable.GetComponent<IWithLeader>();
+        IWithLeader withLeader2 = Selectable.GetComponent<IWithLeader>();
+        if (withLeader1 != null && withLeader2 != null)
         {
-            Selectable.StartCoroutine(CombatManager.getInstance().StartFight(Selectable.GetComponent<ICanCombat>(), selectable.GetComponent<ICanCombat>()));
-            clearSelection();
+            Warrior.Team leader1 = withLeader1.getLeader();
+            Warrior.Team leader2 = withLeader2.getLeader();
+            GraphNode tile1 = DataStructureManager.getInstance().getNode(Selectable.transform.position);
+            GraphNode tile2 = DataStructureManager.getInstance().getNode(selectable.transform.position);
+            if (leader1 != leader2 && DataStructureManager.getInstance().areNeighbours(tile1, tile2))
+            {
+                Selectable.StartCoroutine(CombatManager.getInstance().StartFight(Selectable.GetComponent<ICanCombat>(), selectable.GetComponent<ICanCombat>()));
+                clearSelection();
+            }
+            else Selectable = selectable;
         }
-        else this.Selectable = selectable;
 
     }
 
