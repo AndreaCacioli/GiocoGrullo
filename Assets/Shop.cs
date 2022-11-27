@@ -5,7 +5,7 @@ public class Shop : MonoBehaviour
     ShopManager itemsManager = null;
     [SerializeField] private ShopItem itemViewTemplate;
     [SerializeField] private GameObject itemPosition;
-    private int indexOfShownElement = 0;
+    private int indexOfShownElement = 5;
 
 
     void Start()
@@ -40,6 +40,6 @@ public class Shop : MonoBehaviour
         var shopItem = child.GetComponent<ShopItem>();
         shopItem.price = newList[indexOfShownElement].getPrice();
         shopItem.image = newList[indexOfShownElement].getImage();
-
+        shopItem.shop = this;
     }
 }

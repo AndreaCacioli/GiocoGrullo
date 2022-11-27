@@ -4,6 +4,14 @@ using UnityEngine.UI;
 
 public class ShopItem : MonoBehaviour
 {
+    /// ////////////////
+    //TODO Remove This!!!
+    [SerializeField] public Shop shop;
+    public void scrollLeft()
+    {
+        shop.scrollLeft();
+    }
+    /// ////////////////////////////////////////////
     private Sprite _image;
     public Sprite image
     {
