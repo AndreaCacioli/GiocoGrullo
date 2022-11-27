@@ -6,7 +6,7 @@ public class Selectable : MonoBehaviour
     Tilemap tilemap;
     FogOfWar fogOfWar;
 
-    private void Awake()
+    private void Start()
     {
         tilemap = GetComponent<Tilemap>();
         fogOfWar = FindObjectOfType<FogOfWar>();

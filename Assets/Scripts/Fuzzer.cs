@@ -20,8 +20,9 @@ public class Fuzzer : MonoBehaviour
             resources.gold = Random.Range(1, 1000000);
             int a = Random.Range(0, 2);
             if (a == 1) buyables.shopList = null;
-            else buyables.shopList = randomBuyableList(10);
-            yield return new WaitForSeconds(1);
+            else
+                buyables.shopList = randomBuyableList(10);
+            yield return new WaitForSeconds(5);
         }
     }
 

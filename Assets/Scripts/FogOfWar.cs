@@ -42,7 +42,6 @@ public class FogOfWar : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     public void clearPosition(Vector3 worldCoordinates, int vision)
     {
         Vector3Int coordinates = fowTilemap.WorldToCell(worldCoordinates);

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class ShopItem : MonoBehaviour
 {
+    [SerializeField] private Image imageRenderer;
     private Sprite _image;
     public Sprite image
     {
@@ -11,7 +12,8 @@ public class ShopItem : MonoBehaviour
         set
         {
             _image = value;
-            GetComponent<Image>().overrideSprite = value;
+            if (imageRenderer) imageRenderer.sprite = value;
+            imageRenderer.SetNativeSize();
         }
     }
 

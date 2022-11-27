@@ -51,7 +51,7 @@ public class SelectionManager
             return;
         }
         Warrior.Team selectableTeam = selectable.GetComponent<IWithLeader>().getLeader();
-        Warrior.Team selectedTeam = this.Selectable.GetComponent<IWithLeader>().getLeader();
+        Warrior.Team selectedTeam = Selectable.GetComponent<IWithLeader>().getLeader();
         GraphNode tile1 = DataStructureManager.getInstance().getNode(Selectable.transform.position);
         GraphNode tile2 = DataStructureManager.getInstance().getNode(selectable.transform.position);
         if (selectableTeam != selectedTeam && DataStructureManager.getInstance().areNeighbours(tile1, tile2))

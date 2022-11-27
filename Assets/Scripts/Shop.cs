@@ -8,6 +8,24 @@ public class Shop : MonoBehaviour
     [SerializeField] private float itemScale = .6f;
     private int indexOfShownElement = 0;
 
+    void OnEnable()
+    {
+        setSelectablesActive(false);
+    }
+
+    void OnDisable()
+    {
+        setSelectablesActive(true);
+    }
+
+    private void setSelectablesActive(bool value)
+    {
+        var selectables = FindObjectsOfType<Selectable>(true);
+        foreach (Selectable selectable in selectables)
+        {
+            selectable.enabled = value;
+        }
+    }
 
     void Start()
     {
@@ -17,13 +35,11 @@ public class Shop : MonoBehaviour
 
     public void scrollLeft()
     {
-        Debug.Log("pressed on scroll left");
         if (indexOfShownElement > 0) indexOfShownElement--;
         refreshView(itemsManager.shopList);
     }
     public void scrollRight()
     {
-        Debug.Log("pressed on scroll right");
         if (indexOfShownElement < itemsManager.shopList.Length - 1) indexOfShownElement++;
         refreshView(itemsManager.shopList);
     }
