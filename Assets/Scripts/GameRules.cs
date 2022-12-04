@@ -1,12 +1,25 @@
-﻿using UnityEngine.Tilemaps;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Tilemaps;
 
-//TODO decide if you want to keep this or move to ScriptableObjects
 public class GameRules
 {
 
-    //TODO load values from a file
+    Dictionary<TileBase, float> tileCosts;
+
     private static GameRules instance;
-    private GameRules() { }
+    private GameRules()
+    {
+        tileCosts = new Dictionary<TileBase, float>();
+        TileCosts obj = Resources.Load<TileCosts>("Constants/Rules/TileCosts");
+        foreach (var item in obj.costs)
+        {
+            foreach (TileBase tile in item.tileBase)
+            {
+                tileCosts.Add(tile, item.cost);
+            }
+        }
+    }
     public static GameRules getInstance()
     {
         if (instance == null) instance = new GameRules();
@@ -18,6 +31,8 @@ public class GameRules
         return 100f;
     }
 
+    //TODO
+    //This UI stuff should be moved to the UI Constants
     public float GetYellowValue()
     {
         return .39f;
@@ -26,13 +41,16 @@ public class GameRules
     {
         return .69f;
     }
+    //////////////////////////////////////////////////
 
     public float Cost(TileBase t)
     {
         try
         {
-            if (t.name.Substring(0, 7) == "hexDirt") return 1f;
-            else if (t.name.Substring(0, 13) == "hexScrublands") return 5f;
+            if (tileCosts.ContainsKey(t))
+            {
+                return tileCosts[t];
+            }
             else return float.PositiveInfinity;
         }
         catch
