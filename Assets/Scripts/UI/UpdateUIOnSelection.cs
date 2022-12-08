@@ -12,8 +12,8 @@ public class UpdateUIOnSelection : MonoBehaviour
     [SerializeField] GameObject stepsSectionContainer;
     [SerializeField] GameObject healthSectionContainer;
     [SerializeField] GameObject defenseSectionContainer;
+    [SerializeField] Button BuildButton;
 
-    // Start is called before the first frame update
     void Start()
     {
         SelectionManager.OnSelectionChanged += handleGUI;
@@ -23,32 +23,51 @@ public class UpdateUIOnSelection : MonoBehaviour
     {
         Selectable newSelectable = SelectionManager.getInstance().Selectable;
         panel.SetActive(newSelectable != null);
-
         if (newSelectable == null) return;
 
-        Movable attachedMovable = newSelectable.GetComponent<Movable>();
-        IWithHealth healthContainer = newSelectable.GetComponent<IWithHealth>();
-        IWithDefense defenseContainer = newSelectable.GetComponent<IWithDefense>();
-
         NameText.SetText(newSelectable.name);
+        updateStepsSection(newSelectable);
+        updateHealthSection(newSelectable);
+        updateDefenseSection(newSelectable);
+        toggleBuildButton(newSelectable);
+    }
 
-        stepsSectionContainer.SetActive(attachedMovable != null);
-        if (attachedMovable != null)
-        {
-            StepsText.SetText(attachedMovable.GetMovementPoints().ToString());
-        }
+    private void toggleBuildButton(Selectable newSelectable)
+    {
+        Builder builderComponent = newSelectable.GetComponent<Builder>();
+        BuildButton.interactable = builderComponent != null;
+        if (builderComponent == null) return;
+        //TODO find out why when the shop is shown, it shows no item until you scroll
+        BuildButton.onClick.AddListener(builderComponent.initializeShop);
+    }
 
-        healthSectionContainer.SetActive(healthContainer != null);
-        if (healthContainer != null)
-        {
-            HealthText.SetText(healthContainer.getCurrentHealth().ToString());
-        }
-
+    private void updateDefenseSection(Selectable newSelectable)
+    {
+        IWithDefense defenseContainer = newSelectable.GetComponent<IWithDefense>();
         defenseSectionContainer.SetActive(defenseContainer != null);
         if (defenseContainer != null)
         {
             DefenseText.SetText(defenseContainer.getDefenseValue().ToString());
         }
+    }
 
+    private void updateHealthSection(Selectable newSelectable)
+    {
+        IWithHealth healthContainer = newSelectable.GetComponent<IWithHealth>();
+        healthSectionContainer.SetActive(healthContainer != null);
+        if (healthContainer != null)
+        {
+            HealthText.SetText(healthContainer.getCurrentHealth().ToString());
+        }
+    }
+
+    private void updateStepsSection(Selectable newSelectable)
+    {
+        Movable attachedMovable = newSelectable.GetComponent<Movable>();
+        stepsSectionContainer.SetActive(attachedMovable != null);
+        if (attachedMovable != null)
+        {
+            StepsText.SetText(newSelectable.GetComponent<Movable>().GetMovementPoints().ToString());
+        }
     }
 }

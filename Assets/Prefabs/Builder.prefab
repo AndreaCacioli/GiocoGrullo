@@ -387,6 +387,7 @@ GameObject:
   - component: {fileID: 2078149507}
   - component: {fileID: 2078149508}
   - component: {fileID: 8577472041524175523}
+  - component: {fileID: 2954039293004560649}
   m_Layer: 0
   m_Name: Builder
   m_TagString: Untagged
@@ -765,6 +766,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathFadeOutSpeed: 0
+--- !u!114 &2954039293004560649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109987028385428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eca203365e0e944bbbce3de5ac9d556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canBuild:
+  - {fileID: 2216179068439869979, guid: 03c95bd56c0cdc345913c03346606c92, type: 3}
+  buildingCharges: 0
 --- !u!1 &1148429847025930
 GameObject:
   m_ObjectHideFlags: 0

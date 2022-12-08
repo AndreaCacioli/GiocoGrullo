@@ -4,7 +4,6 @@ using UnityEngine.Tilemaps;
 
 public class GameRules
 {
-
     Dictionary<TileBase, float> tileCosts;
 
     private static GameRules instance;
@@ -20,12 +19,24 @@ public class GameRules
             }
         }
     }
+
+
     public static GameRules getInstance()
     {
         if (instance == null) instance = new GameRules();
         return instance;
     }
+    //////////////////////////////////////////////////////////////
+    //BUILDER SECTION
+    //////////////////////////////////////////////////////////////
+    public int buildersBaseCharges()
+    {
+        return 3;
+    }
 
+    //////////////////////////////////////////////////////////////
+    //END OF BUILDER SECTION
+    //////////////////////////////////////////////////////////////
     public float WarriorStartingHealth()
     {
         return 100f;
@@ -59,6 +70,9 @@ public class GameRules
         }
     }
 
+    //////////////////////////////////////////////////////////////
+    //WARRIOR SECTION
+    //////////////////////////////////////////////////////////////
     public float WarriorBaseCombatStrength()
     {
         return 10f;
@@ -79,18 +93,22 @@ public class GameRules
         return 3;
     }
 
-    internal bool battlesHaveCritDamage()
+    public bool battlesHaveCritDamage()
     {
         return true;
     }
 
-    internal double critRate()
+    public double critRate()
     {
         return .2;
     }
 
-    internal float critMultiplier()
+    public float critMultiplier()
     {
         return 1.25f;
     }
+
+    //////////////////////////////////////////////////////////////
+    //END WARRIOR SECTION
+    //////////////////////////////////////////////////////////////
 }
