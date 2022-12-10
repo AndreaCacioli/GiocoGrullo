@@ -48,6 +48,11 @@ public class Fuzzer : MonoBehaviour
             mImage = image;
         }
 
+        public string getName()
+        {
+            return "aaaaa";
+        }
+
         public double getPrice()
         {
             return mockPrice;

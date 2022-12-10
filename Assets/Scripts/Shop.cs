@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    ShopManager itemsManager = null;
     [SerializeField] private ShopItem itemViewTemplate;
     [SerializeField] private GameObject itemPosition;
     [SerializeField] private float itemScale = .6f;
@@ -11,6 +10,7 @@ public class Shop : MonoBehaviour
     void OnEnable()
     {
         setSelectablesActive(false);
+        refreshView(ShopManager.getInstance().shopList);
     }
 
     void OnDisable()
@@ -29,36 +29,38 @@ public class Shop : MonoBehaviour
 
     void Start()
     {
-        itemsManager = ShopManager.getInstance();
-        itemsManager.OnShopListChanged += (value) => { indexOfShownElement = 0; };
-        itemsManager.OnShopListChanged += refreshView;
+        ShopManager.getInstance().OnShopListChanged += (value) => { indexOfShownElement = 0; };
+        ShopManager.getInstance().OnShopListChanged += refreshView;
     }
 
     public void scrollLeft()
     {
         if (indexOfShownElement > 0) indexOfShownElement--;
-        refreshView(itemsManager.shopList);
+        refreshView(ShopManager.getInstance().shopList);
     }
     public void scrollRight()
     {
-        if (indexOfShownElement < itemsManager.shopList.Length - 1) indexOfShownElement++;
-        refreshView(itemsManager.shopList);
+        if (indexOfShownElement < ShopManager.getInstance().shopList.Length - 1) indexOfShownElement++;
+        refreshView(ShopManager.getInstance().shopList);
     }
 
     private void refreshView(IBuyable[] newList)
     {
-        if (newList == null) return;
-        var children = gameObject.GetComponentsInChildren<Transform>(true);
+        Transform[] children = gameObject.GetComponentsInChildren<Transform>(true);
         foreach (Transform toBeDestroyed in children)
         {
             if (toBeDestroyed.GetComponent<ShopItem>() != null) Destroy(toBeDestroyed.gameObject);
         }
-
+        if (newList == null) return;
         GameObject child = Instantiate(itemViewTemplate.gameObject, itemPosition.transform.position, Quaternion.identity);
         child.transform.SetParent(transform);
         child.transform.localScale = new Vector3(itemScale, itemScale, 1);
-        var shopItem = child.GetComponent<ShopItem>();
-        shopItem.price = newList[indexOfShownElement].getPrice();
-        shopItem.image = newList[indexOfShownElement].getImage();
+        ShopItem shopItem = child.GetComponent<ShopItem>();
+        shopItem.init(newList[indexOfShownElement]);
+    }
+
+    public void buy()
+    {
+        ShopManager.getInstance().buy(ShopManager.getInstance().shopList[indexOfShownElement]);
     }
 }

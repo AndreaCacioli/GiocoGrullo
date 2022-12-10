@@ -130,9 +130,19 @@ public class DataStructureManager
             }
 
         }
-
         return new Vector3Int();
+    }
 
+    public Vector3 getWorldCoordinates(GraphNode graphNode)
+    {
+        foreach (KeyValuePair<Vector3Int, GraphNode> pair in dictionary)
+        {
+            if (graphNode != null && pair.Value.Equals(graphNode))
+            {
+                return tilemap.CellToWorld(pair.Key);
+            }
+        }
+        return new Vector3();
     }
 
     internal List<Vector3Int> getNeighboursCoordinates(Vector3Int coordinates)

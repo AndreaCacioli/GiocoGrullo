@@ -13,7 +13,6 @@ public class UpdateUIOnShopListChange : MonoBehaviour
 
     private void toggleShop(IBuyable[] newList)
     {
-        shop.gameObject.SetActive(newList != null);
-
+        shop.gameObject.SetActive(newList != null); 
     }
 }

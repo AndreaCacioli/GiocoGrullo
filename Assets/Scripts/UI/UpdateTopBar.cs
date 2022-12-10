@@ -11,6 +11,7 @@ public class UpdateTopBar : MonoBehaviour
     {
         resources = ResourcesManager.getInstance();
         resources.OnGoldValueChanged += onGoldValueChanged;
+        onGoldValueChanged(resources.gold);
     }
 
     void onGoldValueChanged(double newValue)

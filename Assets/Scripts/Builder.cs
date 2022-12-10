@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Builder : MonoBehaviour
@@ -9,21 +10,22 @@ public class Builder : MonoBehaviour
         buildingCharges = GameRules.getInstance().buildersBaseCharges();
         //TODO add a way to improve the charges of new builders
     }
-    public void build(Building building)
+    public void build(IBuyable buyable)
     {
-        if (ResourcesManager.getInstance().gold < building.getPrice())
-        {
-            Debug.Log("You lack the required resource: gold");
-            return;
-        }
-        ResourcesManager.getInstance().gold -= building.getPrice();
-        Instantiate(building.gameObject);
+        if (!(buyable is Building)) throw new Exception("Builders can only build buildings");
+        Building building = (Building)buyable;
+        GraphNode myTile = DataStructureManager.getInstance().getNode(transform.position);
+        Vector3 myTileCoordinates = DataStructureManager.getInstance().getWorldCoordinates(myTile);
+        Instantiate(building.gameObject, myTileCoordinates, Quaternion.identity);
         buildingCharges--;
+        ShopManager.getInstance().clearShopList();
+        ShopManager.getInstance().onItemBought -= build;
         if (buildingCharges <= 0) Destroy(gameObject);
     }
 
     public void initializeShop()
     {
         ShopManager.getInstance().shopList = canBuild;
+        ShopManager.getInstance().onItemBought += build;
     }
 }

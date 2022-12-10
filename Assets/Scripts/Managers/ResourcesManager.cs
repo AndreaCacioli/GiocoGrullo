@@ -4,7 +4,7 @@ public class ResourcesManager
     public event onGoldChangeDelegate OnGoldValueChanged;
 
     private static ResourcesManager instance = null;
-    private double _gold = 0;
+    private double _gold = 1000;
 
     public double gold
     {
